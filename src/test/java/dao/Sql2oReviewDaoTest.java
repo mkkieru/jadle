@@ -3,38 +3,47 @@ package dao;
 
 import models.Restaurant;
 import models.Review;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import static org.junit.Assert.assertEquals;
 
 public class Sql2oReviewDaoTest {
-    private Connection conn;
-    private Sql2oReviewDao reviewDao;
-    private Sql2oRestaurantDao restaurantDao;
+    private static Connection conn;
+    private static Sql2oReviewDao reviewDao;
+    private static Sql2oRestaurantDao restaurantDao;
+    private static Sql2oFoodtypeDao foodtypeDao;
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
-        reviewDao = new Sql2oReviewDao(sql2o);
+    @BeforeClass //changed to @BeforeClass (run once before running any tests in this file)
+    public static void setUp() throws Exception { //changed to static
+        String connectionString = "jdbc:postgresql://localhost:5432/jadle_test"; //connect to postgres test database
+        Sql2o sql2o = new Sql2o(connectionString, "damark", "password"); //changed user and pass to null for mac users...Linux & windows need strings
         restaurantDao = new Sql2oRestaurantDao(sql2o);
-        conn = sql2o.open();
+        foodtypeDao = new Sql2oFoodtypeDao(sql2o);
+        reviewDao = new Sql2oReviewDao(sql2o);
+        conn = sql2o.open(); //open connection once before this test file is run
     }
 
-    @After
-    public void tearDown() throws Exception {
-        conn.close();
+    @After //run after every test
+    public void tearDown() throws Exception {  //I have changed
+        System.out.println("clearing database");
+        restaurantDao.clearAll(); //clear all restaurants after every test
+        foodtypeDao.clearAll(); //clear all restaurants after every test
+        reviewDao.clearAll(); //clear all restaurants after every test
     }
 
-    @Test
+    @AfterClass //changed to @AfterClass (run once after all tests in this file completed)
+    public static void shutDown() throws Exception{ //changed to static
+        conn.close(); // close connection once after this entire test file is finished
+        System.out.println("connection closed");
+    }
+
+    /*@Test
     public void addingReviewSetsId() throws Exception {
         Review testReview = setupReview();
         assertEquals(1, testReview.getId());
-    }
+    }*/
 
     @Test
     public void getAll() throws Exception {

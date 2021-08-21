@@ -36,15 +36,15 @@ public class App {
 
 
 
-        /*String connectionString = "jdbc:postgresql://localhost:5432/jadle"; //connect to jadle, not jadle_test!
+        String connectionString = "jdbc:postgresql://localhost:5432/jadle"; //connect to jadle, not jadle_test!
         // Ubuntu
-        Sql2o sql2o = new Sql2o(connectionString, "damark", "password");*/
+        Sql2o sql2o = new Sql2o(connectionString, "damark", "password");
 
         //postgresURI://sqydllxicuqtyd:12e35456ddab16fbd3db2fd56e898ba3913d1b9b727f12fbbab04ce2353e4909@ec2-44-196-132-15.compute-1.amazonaws.com:5432/dduuvp98keh0rv
 
 
-        String connectionString = "jdbc:postgresql://ec2-44-196-132-15.compute-1.amazonaws.com:5432/dduuvp98keh0rv"; //!
-        Sql2o sql2o = new Sql2o(connectionString, "sqydllxicuqtyd", "12e35456ddab16fbd3db2fd56e898ba3913d1b9b727f12fbbab04ce2353e4909"); //!
+        //String connectionString = "jdbc:postgresql://ec2-44-196-132-15.compute-1.amazonaws.com:5432/dduuvp98keh0rv"; //!
+        //Sql2o sql2o = new Sql2o(connectionString, "sqydllxicuqtyd", "12e35456ddab16fbd3db2fd56e898ba3913d1b9b727f12fbbab04ce2353e4909"); //!
 
 
         restaurantDao = new Sql2oRestaurantDao(sql2o);
